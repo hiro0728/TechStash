@@ -55,4 +55,13 @@ class ArticleViewModel @Inject constructor(
             repository.update(article.copy(isRead = !article.isRead))
         }
     }
+
+    /**
+     * 記事をデータベースから削除するための関数。
+     */
+    fun delete(article: Article) {
+        viewModelScope.launch {
+            repository.delete(article)
+        }
+    }
 }

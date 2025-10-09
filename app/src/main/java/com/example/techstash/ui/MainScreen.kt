@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -28,7 +29,17 @@ fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("TechStash") })
+            TopAppBar(
+                title = {
+                    Column {
+                        Text("TechStash")
+                        Text(
+                            "Created by Hirotaka Ueda",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -56,7 +67,8 @@ fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
         ) {
             ArticleList(
                 articles = articles,
-                onToggleReadStatus = { article -> viewModel.toggleReadStatus(article) }
+                onToggleReadStatus = { article -> viewModel.toggleReadStatus(article) },
+                onDeleteArticle = { article -> viewModel.delete(article) }
             )
         }
     }
