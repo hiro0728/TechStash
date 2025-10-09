@@ -20,7 +20,7 @@ interface ArticleDao {
     @Delete
     suspend fun delete(article: Article)
 
-    @Query("SELECT * FROM articles ORDER BY createdAt DESC")
+    @Query("SELECT * FROM articles ORDER BY isRead ASC, createdAt DESC")
     fun getAllArticles(): Flow<List<Article>>
 
 }

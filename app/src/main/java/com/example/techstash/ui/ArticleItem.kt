@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,13 +25,14 @@ import com.example.techstash.data.Article
 @Composable
 fun ArticleItem(
     article: Article,
-    onToggleReadStatus: (Article) -> Unit
+    onToggleReadStatus: (Article) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     val context = LocalContext.current
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 horizontal = 16.dp,
@@ -56,7 +58,9 @@ fun ArticleItem(
                     text = article.title,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = if (article.isRead) Color.Gray else Color.Unspecified,
                 )
+
 
                 //著者が空かどうがをチェック
                 val authorText = if (article.author.isNotBlank()) {
@@ -65,7 +69,10 @@ fun ArticleItem(
                     "著者不明"
                 }
 
-                Text(text = authorText)
+                Text(
+                    text = authorText,
+                    color = if (article.isRead) Color.Gray else Color.Unspecified,
+                )
             }
             Spacer(modifier = Modifier.width(16.dp))
 
