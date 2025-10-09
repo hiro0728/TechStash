@@ -54,7 +54,10 @@ fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
-            ArticleList(articles = articles)
+            ArticleList(
+                articles = articles,
+                onToggleReadStatus = { article -> viewModel.toggleReadStatus(article) }
+            )
         }
     }
 }

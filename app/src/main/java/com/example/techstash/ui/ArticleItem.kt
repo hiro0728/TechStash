@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.sp
 import com.example.techstash.data.Article
 
 @Composable
-fun ArticleItem(article: Article) {
+fun ArticleItem(
+    article: Article,
+    onToggleReadStatus: (Article) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,7 +48,7 @@ fun ArticleItem(article: Article) {
 
             Checkbox(
                 checked = article.isRead,
-                onCheckedChange = {/*onToggleReadStatus*/ }
+                onCheckedChange = { onToggleReadStatus(article) }
             )
 
         }
