@@ -42,7 +42,15 @@ fun ArticleItem(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                 )
-                Text(text = "by ${article.author}")
+
+                //著者が空かどうがをチェック
+                val authorText = if (article.author.isNotBlank()) {
+                    "by ${article.author}"
+                } else {
+                    "著者不明"
+                }
+
+                Text(text = authorText)
             }
             Spacer(modifier = Modifier.width(16.dp))
 
