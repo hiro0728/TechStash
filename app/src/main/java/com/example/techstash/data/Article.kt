@@ -22,6 +22,9 @@ data class Article(
     //既読かどうかを示すフラグ。デフォルトはfalse(未読)
     val isRead: Boolean = false,
 
+    //著者名
+    val author: String,
+
     //登録日時
     val createdAt: Date,
 
