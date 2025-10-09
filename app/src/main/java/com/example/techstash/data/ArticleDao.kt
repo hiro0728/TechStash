@@ -21,6 +21,6 @@ interface ArticleDao {
     suspend fun delete(article: Article)
 
     @Query("SELECT * FROM articles ORDER BY createdAt DESC")
-    fun geAllArticles(): Flow<List<Article>>
+    fun getAllArticles(): Flow<List<Article>>
 
 }
