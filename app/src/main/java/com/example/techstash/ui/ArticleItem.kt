@@ -1,5 +1,7 @@
 package com.example.techstash.ui
 
+import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,9 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.example.techstash.data.Article
 
 @Composable
@@ -22,6 +26,9 @@ fun ArticleItem(
     article: Article,
     onToggleReadStatus: (Article) -> Unit
 ) {
+
+    val context = LocalContext.current
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,6 +36,14 @@ fun ArticleItem(
                 horizontal = 16.dp,
                 vertical = 8.dp,
             )
+            .clickable {
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, article.url.toUri())
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
