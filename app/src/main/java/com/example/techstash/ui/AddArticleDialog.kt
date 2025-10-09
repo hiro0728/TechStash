@@ -26,6 +26,8 @@ fun AddArticleDialog(
     var author by remember { mutableStateOf("") }
     var memo by remember { mutableStateOf("") }
 
+    val isSavedEnable = url.isNotBlank() && title.isNotBlank()
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("新しい記事の追加") },
@@ -56,7 +58,8 @@ fun AddArticleDialog(
             Button(
                 onClick = {
                     onConfirm(url, title, author, memo)
-                }
+                },
+                enabled = isSavedEnable
             ) {
                 Text("保存")
             }
