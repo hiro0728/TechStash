@@ -28,7 +28,7 @@ fun AddArticleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add New Article") },
+        title = { Text("新しい記事の追加") },
         text = {
             Column {
                 OutlinedTextField(
@@ -39,17 +39,17 @@ fun AddArticleDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") })
+                    label = { Text("タイトル") })
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = author,
                     onValueChange = { author = it },
-                    label = { Text("Author") })
+                    label = { Text("著者") })
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = memo,
                     onValueChange = { memo = it },
-                    label = { Text("Memo") })
+                    label = { Text("メモ") })
             }
         },
         confirmButton = {
@@ -58,12 +58,12 @@ fun AddArticleDialog(
                     onConfirm(url, title, author, memo)
                 }
             ) {
-                Text("Save")
+                Text("保存")
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("Cancel")
+                Text("キャンセル")
             }
         }
     )

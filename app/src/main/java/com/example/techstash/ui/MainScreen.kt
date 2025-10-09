@@ -36,7 +36,7 @@ fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
                     showDialog = true
                 }
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Article")
+                Icon(Icons.Default.Add, contentDescription = "記事を追加")
             }
         }
     ) { paddingValues ->
