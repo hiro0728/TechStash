@@ -20,4 +20,11 @@ class ArticleRepository @Inject constructor(private val articleDao: ArticleDao) 
     suspend fun delete(article: Article) {
         articleDao.delete(article)
     }
+
+    /**
+     * IDを指定して単一の記事を取得する。
+     */
+    fun getArticleById(id: Int): Flow<Article?> {
+        return articleDao.getArticleById(id)
+    }
 }

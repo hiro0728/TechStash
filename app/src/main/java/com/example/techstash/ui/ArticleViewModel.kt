@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.techstash.data.Article
 import com.example.techstash.data.ArticleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -26,6 +28,18 @@ class ArticleViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList(),
         )
+
+    private val _selectArticle = MutableStateFlow<Article?>(null)
+    val selectedArticle: StateFlow<Article?> = _selectArticle.asStateFlow()
+
+    fun loadArticleById(id: Int) {
+        viewModelScope.launch {
+            repository.getArticleById(id).collect { article ->
+                _selectArticle.value = article
+            }
+        }
+    }
+
 
     /**
      * 新しい記事をデータベースに挿入するための関数
