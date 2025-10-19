@@ -39,7 +39,8 @@ class MainActivity : ComponentActivity() {
 
                         ArticleDetailScreen(
                             viewModel = hiltViewModel(),
-                            articleId = articleId
+                            articleId = articleId,
+                            navController = navController
                         )
                     }
                 }
