@@ -19,10 +19,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.techstash.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
+fun MainScreen(
+    viewModel: ArticleViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val articles by viewModel.allArticles.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
@@ -68,7 +73,10 @@ fun MainScreen(viewModel: ArticleViewModel = hiltViewModel()) {
             ArticleList(
                 articles = articles,
                 onToggleReadStatus = { article -> viewModel.toggleReadStatus(article) },
-                onDeleteArticle = { article -> viewModel.delete(article) }
+                onDeleteArticle = { article -> viewModel.delete(article) },
+                onLongClick = { article ->
+                    navController.navigate(Screen.DetailScreen.createRoute(article.id))
+                }
             )
         }
     }

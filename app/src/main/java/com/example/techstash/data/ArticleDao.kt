@@ -23,4 +23,12 @@ interface ArticleDao {
     @Query("SELECT * FROM articles ORDER BY isRead ASC, createdAt DESC")
     fun getAllArticles(): Flow<List<Article>>
 
+    /**
+     *指定されたIDの記事を1件だけ取得する。
+     * @param id 取得したい記事のID
+     * @return 該当する記事。見つからなかった場合はnullを返す。
+     */
+    @Query("SELECT * FROM articles WHERE id = :id")
+    fun getArticleById(id: Int): Flow<Article?>
+
 }

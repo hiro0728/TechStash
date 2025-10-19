@@ -31,6 +31,7 @@ fun ArticleList(
     articles: List<Article>,
     onToggleReadStatus: (Article) -> Unit,
     onDeleteArticle: (Article) -> Unit,
+    onLongClick: (Article) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -91,6 +92,8 @@ fun ArticleList(
                 ArticleItem(
                     article = article,
                     onToggleReadStatus = onToggleReadStatus,
+                    onLongClick = onLongClick,
+                    modifier = Modifier.animateItem()
                 )
             }
         }
