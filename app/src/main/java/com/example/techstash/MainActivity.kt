@@ -3,11 +3,13 @@ package com.example.techstash
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.techstash.ui.ArticleDetailScreen
 import com.example.techstash.ui.MainScreen
+import com.example.techstash.ui.navigation.Screen
 import com.example.techstash.ui.theme.TechStashTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,11 +19,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TechStashTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.MainScreen.route
                 ) {
-                    MainScreen()
+                    composable(
+                        route = Screen.MainScreen.route
+                    ) {
+                        MainScreen(navController = navController)
+                    }
+
+                    composable(
+                        route = Screen.DetailScreen.route
+                    ) { backStackEntry ->
+                        val articleId =
+                            backStackEntry.arguments?.getString("articleId")?.toIntOrNull() ?: 0
+
+                        ArticleDetailScreen(
+                            viewModel = hiltViewModel(),
+                            articleId = articleId
+                        )
+                    }
                 }
             }
         }

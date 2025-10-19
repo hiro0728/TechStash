@@ -1,7 +1,8 @@
 package com.example.techstash.ui
 
 import android.content.Intent
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,10 +23,12 @@ import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import com.example.techstash.data.Article
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArticleItem(
     article: Article,
     onToggleReadStatus: (Article) -> Unit,
+    onLongClick: (Article) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -38,14 +41,19 @@ fun ArticleItem(
                 horizontal = 16.dp,
                 vertical = 8.dp,
             )
-            .clickable {
-                try {
-                    val intent = Intent(Intent.ACTION_VIEW, article.url.toUri())
-                    context.startActivity(intent)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+            .combinedClickable(
+                onClick = {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, article.url.toUri())
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                },
+                onLongClick = {
+                    onLongClick(article)
                 }
-            }
+            )
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
