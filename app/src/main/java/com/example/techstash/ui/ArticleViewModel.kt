@@ -32,6 +32,13 @@ class ArticleViewModel @Inject constructor(
     private val _selectArticle = MutableStateFlow<Article?>(null)
     val selectedArticle: StateFlow<Article?> = _selectArticle.asStateFlow()
 
+    private val _initialShareHandled = MutableStateFlow(false)
+    val initialShareHandled: StateFlow<Boolean> = _initialShareHandled.asStateFlow()
+
+    fun markInitialShareHandled() {
+        _initialShareHandled.value = true
+    }
+
     fun loadArticleById(id: Int) {
         viewModelScope.launch {
             repository.getArticleById(id).collect { article ->

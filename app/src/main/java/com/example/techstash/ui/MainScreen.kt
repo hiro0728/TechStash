@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +32,15 @@ fun MainScreen(
     initialTitle: String?,
 ) {
     val articles by viewModel.allArticles.collectAsState()
+    val initialShareHandled by viewModel.initialShareHandled.collectAsState()
 
-    var showDialog by remember { mutableStateOf(initialUrl != null) }
+    var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(initialUrl, initialShareHandled) {
+        if (initialUrl != null && !initialShareHandled) {
+            showDialog = true
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -63,10 +71,14 @@ fun MainScreen(
             AddArticleDialog(
                 initialUrl = initialUrl,
                 initialTitle = initialTitle,
-                onDismiss = { showDialog = false },
+                onDismiss = {
+                    showDialog = false
+                    viewModel.markInitialShareHandled()
+                },
                 onConfirm = { url, title, author, memo ->
                     viewModel.insert(url, title, author, memo)
                     showDialog = false
+                    viewModel.markInitialShareHandled()
                 }
             )
         }
