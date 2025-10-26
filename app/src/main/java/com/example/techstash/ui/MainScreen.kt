@@ -26,11 +26,13 @@ import com.example.techstash.ui.navigation.Screen
 @Composable
 fun MainScreen(
     viewModel: ArticleViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    initialUrl: String?,
+    initialTitle: String?,
 ) {
     val articles by viewModel.allArticles.collectAsState()
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(initialUrl != null) }
 
     Scaffold(
         topBar = {
@@ -59,6 +61,8 @@ fun MainScreen(
 
         if (showDialog) {
             AddArticleDialog(
+                initialUrl = initialUrl,
+                initialTitle = initialTitle,
                 onDismiss = { showDialog = false },
                 onConfirm = { url, title, author, memo ->
                     viewModel.insert(url, title, author, memo)
