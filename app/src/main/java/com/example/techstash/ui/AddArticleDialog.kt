@@ -17,12 +17,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AddArticleDialog(
+    initialUrl: String?,
+    initialTitle: String?,
     onDismiss: () -> Unit,
     onConfirm: (url: String, title: String, author: String, memo: String) -> Unit
 ) {
     // 各入力欄の状態を管理するための変数
-    var url by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf("") }
+    var url by remember { mutableStateOf(initialUrl ?: "") }
+    var title by remember { mutableStateOf(initialTitle ?: "") }
     var author by remember { mutableStateOf("") }
     var memo by remember { mutableStateOf("") }
 
